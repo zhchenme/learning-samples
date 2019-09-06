@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        autowire：可自动注入属性，而不需要手动设置
+            byType：根据 class 类型注入属性
+            byName：根据 name 注入属性
+            constructor：根据构造器注入属性
+    -->
+    <bean id="user" class="com.jas.mess.bean.User" autowire="byType">
+        <property name="name" value="zc"/>
+        <property name="age" value="10"/>
+    </bean>
+
+    <!-- 设置别名 -->
+    <alias name="user" alias="user1"/>
+    <alias name="user" alias="user2"/>
+
+    <bean id="dept" class="com.jas.mess.bean.Dept">
+        <property name="deptName" value="engineer"/>
+    </bean>
+
+    <bean id="userFactoryBean" class="com.jas.mess.factory.UserFactoryBean"/>
+
+    <!-- factory-method：顾名思义，用于生成对象的工厂方法，对于非静态工厂，需要 factory-bean 和 factory-method 配合使用 -->
+    <bean id="helloFactoryMethod" class="com.jas.mess.factory.HelloFactoryMethod" factory-method="getUser"/>
+
+    <bean id="news" class="com.jas.mess.lookup.method.News" scope="prototype"/>
+
+    <!--
+        lookup-method：可保证单例中的实例是 prototype 类型的
+    -->
+    <bean id="newsPublisher" class="com.jas.mess.lookup.method.NewsPublisher">
+        <!--<property name="news" ref="news"/>-->
+        <lookup-method bean="news" name="getNews"/>
+    </bean>
+
+    <bean id="newsPublisherAware" class="com.jas.mess.lookup.method.NewsPublisherAware"/>
+
+    <!-- 后置处理器 -->
+    <!--<bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.LoggerBeanPostProcessor"/>-->
+
+</beans>
