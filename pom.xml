@@ -8,4 +8,11 @@
     <artifactId>learning-samples-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <modules>
+        <module>business-architecture</module>
+        <module>tiny-springframework</module>
+        <module>spring-learn-samples</module>
+        <module>effective-java-samples</module>
+    </modules>
+
 </project>
