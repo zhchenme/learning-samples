@@ -1,6 +1,7 @@
 package com.jas.graphic.context;
 
 import com.jas.graphic.business.BusinessGraphic;
+import com.jas.vo.CustomVO;
 import lombok.Data;
 
 /**
@@ -33,10 +34,17 @@ public class GraphicNodeContext {
      */
     private Integer scenario;
 
+    /*--------------------------- 业务划分参数 --------------------------------*/
+
     /**
      * 业务操作
      */
     private BusinessGraphic.Operation operation;
 
     /*--------------------------- 返回参数区 --------------------------------*/
+
+    /**
+     * 返参
+     */
+    private CustomVO customVO;
 }
