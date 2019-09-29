@@ -1,4 +1,4 @@
-package com.jas.graphic.business;
+package com.jas.graphic.core;
 
 import com.jas.constant.BusinessScenarioEnum;
 import com.jas.constant.IndustryEnum;
@@ -56,12 +56,12 @@ public class BusinessGraphic {
         /**
          * 测试一
          */
-        GET_DEMO(null, null, Operation.GET, Collections.singletonList(GraphicNodeBeanName.GET_TEST)),
+        GET_DEMO(IndustryEnum.INDUSTRY_ONE, BusinessScenarioEnum.BUSINESS_SCENARIO_ONE, Operation.GET, Collections.singletonList(GraphicNodeBeanName.GET_TEST)),
 
         /**
          * 测试二
          */
-        INSERT_DEMO(null, null, Operation.INSERT, Collections.singletonList(GraphicNodeBeanName.INSERT_TEST));
+        INSERT_DEMO(IndustryEnum.INDUSTRY_TWO, BusinessScenarioEnum.BUSINESS_SCENARIO_TWO, Operation.INSERT, Collections.singletonList(GraphicNodeBeanName.INSERT_TEST));
 
 
         private IndustryEnum industry;
@@ -97,22 +97,26 @@ public class BusinessGraphic {
     }
 
     public static List<String> findGraphic(int industry, int scenario, Operation operation) {
-        // 参数校验、行业处理、业务场景处理
-
-        // 根据具体操作过滤 ScenarioWithOperation
+        IndustryEnum industryEnum = IndustryEnum.findByType(industry);
+        if(null == industryEnum) {
+            throw new RuntimeException();
+        }
+        BusinessScenarioEnum scenarioEnum = BusinessScenarioEnum.findByType(scenario);
+        if(null == scenarioEnum) {
+            throw new RuntimeException();
+        }
+        if(null == operation) {
+            throw new RuntimeException();
+        }
         List<ScenarioWithOperation> scenarioWithOperationList = Arrays.stream(ScenarioWithOperation.values()).filter(a -> a.getOperation().equals(operation)).collect(Collectors.toList());
         KeyGenerator<String, String, String> keyGenerator = (arg1, arg2) -> (null == arg1 ? "" : arg1) + "_" + (null == arg2 ? "" : arg2) ;
-        // 将过滤的 ScenarioWithOperation 集合按照"行业_场景"封装成 map
+        // key:industry_scenario
         Map<String, ScenarioWithOperation> scenarioWithOperationMap = scenarioWithOperationList.stream().collect(Collectors.toMap(scenarioWithOperation -> {
-            IndustryEnum industryEnum = scenarioWithOperation.getIndustry();
+            IndustryEnum i = scenarioWithOperation.getIndustry();
             BusinessScenarioEnum businessScenarioEnum = scenarioWithOperation.getScenario();
-            return keyGenerator.getKey(null == industryEnum ? "" : industryEnum.getType() + "", null == businessScenarioEnum ? "" : businessScenarioEnum.getType() + "");
+            return keyGenerator.getKey(null == i ? "" : i.getType() + "", null == businessScenarioEnum ? "" : businessScenarioEnum.getType() + "");
         }, scenarioWithOperation -> scenarioWithOperation));
         ScenarioWithOperation scenarioWithOperation = scenarioWithOperationMap.getOrDefault(keyGenerator.getKey(industry + "", scenario + ""), null);
-        /*if(null == scenarioWithOperation) {
-            // 行业不为空，场景为空，空与非空可自定义
-            scenarioWithOperation = scenarioWithOperationMap.getOrDefault(keyGenerator.getKey(industry + "", null), null);
-        }*/
         List<String> graphicList = null == scenarioWithOperation ? null : scenarioWithOperation.getGraphicList();
         if(CollectionUtils.isEmpty(graphicList)) {
             throw new RuntimeException();

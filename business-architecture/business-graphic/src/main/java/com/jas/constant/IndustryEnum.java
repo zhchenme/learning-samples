@@ -10,7 +10,8 @@ import java.util.Arrays;
  */
 public enum IndustryEnum {
 
-    ;
+    INDUSTRY_ONE(1, "行业一"),
+    INDUSTRY_TWO(2, "行业二");
 
     private int type;
     private String name;

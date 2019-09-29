@@ -1,6 +1,6 @@
 package com.jas.graphic.context;
 
-import com.jas.graphic.business.BusinessGraphic;
+import com.jas.graphic.core.BusinessGraphic;
 import com.jas.vo.CustomVO;
 import lombok.Data;
 

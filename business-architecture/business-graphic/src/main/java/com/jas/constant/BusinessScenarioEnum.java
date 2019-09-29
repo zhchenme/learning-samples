@@ -10,6 +10,8 @@ import java.util.Arrays;
  */
 public enum BusinessScenarioEnum {
 
+    BUSINESS_SCENARIO_ONE(1, "业务类型1"),
+    BUSINESS_SCENARIO_TWO(2, "业务类型2")
     ;
 
     private int type;

@@ -1,9 +1,10 @@
 package com.jas.graphic.core;
 
-import com.jas.graphic.business.BusinessGraphic;
 import com.jas.graphic.context.GraphicNodeContext;
+import com.jas.graphic.node.GraphicNode;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @author lanxiang
  * @since 2019-09-10
  */
+@Component
 public class GraphicExecuteEngine implements ApplicationListener<ContextRefreshedEvent> {
 
     private static Map<String, GraphicNode> graphicNodeHolder = null;

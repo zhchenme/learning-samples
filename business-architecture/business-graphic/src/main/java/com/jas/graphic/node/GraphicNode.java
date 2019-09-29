@@ -1,4 +1,4 @@
-package com.jas.graphic.core;
+package com.jas.graphic.node;
 
 import com.jas.graphic.context.GraphicNodeContext;
 
