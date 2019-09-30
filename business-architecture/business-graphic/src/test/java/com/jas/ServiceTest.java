@@ -29,4 +29,24 @@ public class ServiceTest {
         System.out.println(customService.getTest(request));
     }
 
+    @Test
+    public void insertTest() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(RESOURCE_PATH);
+        ICustomFacade customService = applicationContext.getBean(CustomService.class);
+        CommonRequest request = new CommonRequest();
+        request.setBusinessScenario(IndustryEnum.INDUSTRY_TWO.getType());
+        request.setIndustry(BusinessScenarioEnum.BUSINESS_SCENARIO_TWO.getType());
+        System.out.println(customService.insertTest(request));
+    }
+
+    @Test
+    public void complexTest() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(RESOURCE_PATH);
+        ICustomFacade customService = applicationContext.getBean(CustomService.class);
+        CommonRequest request = new CommonRequest();
+        request.setBusinessScenario(BusinessScenarioEnum.BUSINESS_SCENARIO_TWO.getType());
+        request.setIndustry(IndustryEnum.INDUSTRY_ONE.getType());
+        System.out.println(customService.complexTest(request));
+    }
+
 }

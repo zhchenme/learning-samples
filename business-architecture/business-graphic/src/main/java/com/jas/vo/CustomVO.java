@@ -11,8 +11,9 @@ import java.util.List;
  * @since 2019-09-25
  */
 @Data
-public class CustomVO {
+public class CustomVO extends BaseVO {
 
+    private static final long serialVersionUID = -942835658570925105L;
     /**
      * 测试返回数据
      */

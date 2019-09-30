@@ -2,6 +2,7 @@ package com.jas.graphic.core;
 
 import com.jas.constant.BusinessScenarioEnum;
 import com.jas.constant.IndustryEnum;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
@@ -23,11 +24,14 @@ public class BusinessGraphic {
         String INSERT_TEST = "insertTestGraphicNode";
 
         String GET_TEST = "getTestGraphicNode";
+
+        String COMPLEX_TEST = "complexTestGraphicNode";
     }
 
     public enum Operation {
-        INSERT(1, "insert", "插入数据"),
-        GET(2, "get", "获取数据");
+        INSERT(1, "insert", "插入数据测试"),
+        GET(2, "get", "获取数据测试"),
+        COMPLEX(3, "complex", "复合操作测试");
 
         private Integer code;
         private String name;
@@ -53,15 +57,14 @@ public class BusinessGraphic {
     }
 
     enum ScenarioWithOperation {
-        /**
-         * 测试一
-         */
-        GET_DEMO(IndustryEnum.INDUSTRY_ONE, BusinessScenarioEnum.BUSINESS_SCENARIO_ONE, Operation.GET, Collections.singletonList(GraphicNodeBeanName.GET_TEST)),
+        GET_DEMO(IndustryEnum.INDUSTRY_ONE, BusinessScenarioEnum.BUSINESS_SCENARIO_ONE, Operation.GET,
+                Collections.singletonList(GraphicNodeBeanName.GET_TEST)),
 
-        /**
-         * 测试二
-         */
-        INSERT_DEMO(IndustryEnum.INDUSTRY_TWO, BusinessScenarioEnum.BUSINESS_SCENARIO_TWO, Operation.INSERT, Collections.singletonList(GraphicNodeBeanName.INSERT_TEST));
+        INSERT_DEMO(IndustryEnum.INDUSTRY_TWO, BusinessScenarioEnum.BUSINESS_SCENARIO_TWO, Operation.INSERT,
+                Collections.singletonList(GraphicNodeBeanName.INSERT_TEST)),
+
+        COMPLEX_DEMO(IndustryEnum.INDUSTRY_ONE, BusinessScenarioEnum.BUSINESS_SCENARIO_TWO, Operation.COMPLEX,
+                Arrays.asList(GraphicNodeBeanName.GET_TEST, GraphicNodeBeanName.INSERT_TEST, GraphicNodeBeanName.COMPLEX_TEST));
 
 
         private IndustryEnum industry;
@@ -98,18 +101,18 @@ public class BusinessGraphic {
 
     public static List<String> findGraphic(int industry, int scenario, Operation operation) {
         IndustryEnum industryEnum = IndustryEnum.findByType(industry);
-        if(null == industryEnum) {
+        if (null == industryEnum) {
             throw new RuntimeException();
         }
         BusinessScenarioEnum scenarioEnum = BusinessScenarioEnum.findByType(scenario);
-        if(null == scenarioEnum) {
+        if (null == scenarioEnum) {
             throw new RuntimeException();
         }
-        if(null == operation) {
+        if (null == operation) {
             throw new RuntimeException();
         }
         List<ScenarioWithOperation> scenarioWithOperationList = Arrays.stream(ScenarioWithOperation.values()).filter(a -> a.getOperation().equals(operation)).collect(Collectors.toList());
-        KeyGenerator<String, String, String> keyGenerator = (arg1, arg2) -> (null == arg1 ? "" : arg1) + "_" + (null == arg2 ? "" : arg2) ;
+        KeyGenerator<String, String, String> keyGenerator = (arg1, arg2) -> (null == arg1 ? "" : arg1) + "_" + (null == arg2 ? "" : arg2);
         // key:industry_scenario
         Map<String, ScenarioWithOperation> scenarioWithOperationMap = scenarioWithOperationList.stream().collect(Collectors.toMap(scenarioWithOperation -> {
             IndustryEnum i = scenarioWithOperation.getIndustry();
@@ -118,7 +121,7 @@ public class BusinessGraphic {
         }, scenarioWithOperation -> scenarioWithOperation));
         ScenarioWithOperation scenarioWithOperation = scenarioWithOperationMap.getOrDefault(keyGenerator.getKey(industry + "", scenario + ""), null);
         List<String> graphicList = null == scenarioWithOperation ? null : scenarioWithOperation.getGraphicList();
-        if(CollectionUtils.isEmpty(graphicList)) {
+        if (CollectionUtils.isEmpty(graphicList)) {
             throw new RuntimeException();
         }
         return graphicList;

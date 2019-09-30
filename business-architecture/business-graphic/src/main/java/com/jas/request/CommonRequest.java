@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 public class CommonRequest extends AbstractRequest {
 
+    private static final long serialVersionUID = -2800893807862402571L;
     /**
      * 当前操作用户
      */

@@ -47,4 +47,9 @@ public class GraphicNodeContext {
      * 返参
      */
     private CustomVO customVO;
+
+    /**
+     * 操作是否成功
+     */
+    private Boolean operationResult;
 }

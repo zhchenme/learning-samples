@@ -5,6 +5,7 @@ import com.jas.graphic.core.BusinessGraphic;
 import com.jas.graphic.context.GraphicNodeContext;
 import com.jas.graphic.core.GraphicExecuteEngine;
 import com.jas.request.CommonRequest;
+import com.jas.vo.ComplexVO;
 import com.jas.vo.CustomVO;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,38 @@ public class CustomService extends AbstractCustomService implements ICustomFacad
             throw new RuntimeException();
         }
         return customVO;
+    }
+
+    @Override
+    public boolean insertTest(CommonRequest commonRequest) {
+        if (null == commonRequest) {
+            throw new RuntimeException();
+        }
+        boolean result;
+        try {
+            GraphicNodeContext context = super.initContext(commonRequest);
+            context = GraphicExecuteEngine.execute(context, BusinessGraphic.Operation.INSERT);
+            result = context.getOperationResult();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+        return result;
+    }
+
+    @Override
+    public ComplexVO complexTest(CommonRequest commonRequest) {
+        if (null == commonRequest) {
+            throw new RuntimeException();
+        }
+        ComplexVO complexVO = new ComplexVO();
+        try {
+            GraphicNodeContext context = super.initContext(commonRequest);
+            context = GraphicExecuteEngine.execute(context, BusinessGraphic.Operation.COMPLEX);
+            complexVO.setCustomVO(context.getCustomVO());
+            complexVO.setOperationResult(context.getOperationResult());
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+        return complexVO;
     }
 }
