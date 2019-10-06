@@ -66,7 +66,6 @@ public class BusinessGraphic {
         COMPLEX_DEMO(IndustryEnum.INDUSTRY_ONE, BusinessScenarioEnum.BUSINESS_SCENARIO_TWO, Operation.COMPLEX,
                 Arrays.asList(GraphicNodeBeanName.GET_TEST, GraphicNodeBeanName.INSERT_TEST, GraphicNodeBeanName.COMPLEX_TEST));
 
-
         private IndustryEnum industry;
 
         private BusinessScenarioEnum scenario;
@@ -99,7 +98,7 @@ public class BusinessGraphic {
         }
     }
 
-    public static List<String> findGraphic(int industry, int scenario, Operation operation) {
+    static List<String> findGraphic(int industry, int scenario, Operation operation) {
         IndustryEnum industryEnum = IndustryEnum.findByType(industry);
         if (null == industryEnum) {
             throw new RuntimeException();

@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2019-09-30
  */
 @Data
-public class ComplexVO extends BaseVO{
+public class ComplexVO extends BaseVO {
 
     private static final long serialVersionUID = 8815860786016280876L;
     /**

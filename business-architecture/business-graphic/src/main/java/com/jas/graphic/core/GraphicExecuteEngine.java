@@ -29,7 +29,7 @@ public class GraphicExecuteEngine implements ApplicationListener<ContextRefreshe
         int scenario = context.getScenario();
         context.setOperation(operation);
         List<String> graphicList = findGraphic(industry, scenario, operation);
-        for (String graphic: graphicList) {
+        for (String graphic : graphicList) {
             GraphicNode graphicNode = graphicNodeHolder.getOrDefault(graphic, null);
             if (null == graphic) {
                 throw new RuntimeException();

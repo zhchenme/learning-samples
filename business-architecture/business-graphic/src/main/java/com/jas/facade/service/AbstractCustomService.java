@@ -9,9 +9,9 @@ import com.jas.request.CommonRequest;
  * @author lanxiang
  * @since 2019-09-25
  */
-public abstract class AbstractCustomService {
+abstract class AbstractCustomService {
 
-    protected GraphicNodeContext initContext(CommonRequest commonRequest) {
+    GraphicNodeContext initContext(CommonRequest commonRequest) {
         GraphicNodeContext context = new GraphicNodeContext();
         context.setCustomerId(commonRequest.getCustomerId());
         context.setIndustry(commonRequest.getIndustry());
