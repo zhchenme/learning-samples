@@ -40,6 +40,7 @@
     <bean id="newsPublisherAware" class="com.jas.mess.lookup.method.NewsPublisherAware"/>
 
     <!-- 后置处理器 -->
-    <!--<bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.LoggerBeanPostProcessor"/>-->
+    <bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.BeanPostProcessorLogger"/>
+    <bean id="beanFactoryPostProcessorTest" class="com.jas.mess.processor.BeanFactoryPostProcessorLogger"/>
 
 </beans>
