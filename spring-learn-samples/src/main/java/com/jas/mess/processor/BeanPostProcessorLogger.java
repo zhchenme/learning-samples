@@ -9,7 +9,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  * @author lanxiang
  * @since 2019-08-23
  */
-public class LoggerBeanPostProcessor implements BeanPostProcessor {
+public class BeanPostProcessorLogger implements BeanPostProcessor {
 
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         System.out.println("Before " + beanName + " Initialization");
