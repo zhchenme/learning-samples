@@ -11,6 +11,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 public class BeanFactoryPostProcessorLogger implements BeanFactoryPostProcessor {
 
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        System.out.println(11111111);
+        System.out.println("------------BeanFactoryPostProcessorLogger-------------");
     }
 }

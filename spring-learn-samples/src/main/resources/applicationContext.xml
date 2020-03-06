@@ -42,5 +42,6 @@
     <!-- 后置处理器 -->
     <bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.BeanPostProcessorLogger"/>
     <bean id="beanFactoryPostProcessorTest" class="com.jas.mess.processor.BeanFactoryPostProcessorLogger"/>
+    <bean id="beanDefinitionRegistryPostProcessorLogger" class="com.jas.mess.processor.BeanDefinitionRegistryPostProcessorLogger"/>
 
 </beans>
