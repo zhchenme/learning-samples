@@ -44,4 +44,5 @@
     <bean id="beanFactoryPostProcessorTest" class="com.jas.mess.processor.BeanFactoryPostProcessorLogger"/>
     <bean id="beanDefinitionRegistryPostProcessorLogger" class="com.jas.mess.processor.BeanDefinitionRegistryPostProcessorLogger"/>
 
+    <bean id="smartInitializingSingletonLogger" class="com.jas.mess.bean.SmartInitializingSingletonLogger"/>
 </beans>
