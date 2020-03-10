@@ -22,7 +22,7 @@ public class BeanTest {
     @Test
     public void aliasTest() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
-        System.out.println("alias-user1 -> " + applicationContext.getBean("user1"));
+        System.out.println("user -> " + applicationContext.getBean("user"));
         System.out.println("alias-user2 -> " + applicationContext.getBean("user2"));
     }
 
