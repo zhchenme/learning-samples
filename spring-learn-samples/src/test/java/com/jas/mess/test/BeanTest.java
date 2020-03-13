@@ -1,6 +1,8 @@
 package com.jas.mess.test;
 
+import com.alibaba.fastjson.JSON;
 import com.jas.mess.bean.User;
+import com.jas.mess.event.EventDemoPublish;
 import com.jas.mess.factory.UserFactoryBean;
 import com.jas.mess.lookup.method.NewsPublisher;
 import com.jas.mess.lookup.method.NewsPublisherAware;
@@ -79,5 +81,17 @@ public class BeanTest {
 //         depends-on="user"
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
         System.out.println("depends-on -> " + applicationContext.getBean("user"));
+    }
+
+    @Test
+    public void eventTest() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
+        applicationContext.getBean("eventDemoPublish", EventDemoPublish.class).publish(applicationContext, "hello world");
+    }
+
+    @Test
+    public void test() {
+        // i get it.
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
     }
 }

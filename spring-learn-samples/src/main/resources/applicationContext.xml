@@ -40,9 +40,16 @@
     <bean id="newsPublisherAware" class="com.jas.mess.lookup.method.NewsPublisherAware"/>
 
     <!-- 后置处理器 -->
-    <bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.BeanPostProcessorLogger"/>
-    <bean id="beanFactoryPostProcessorTest" class="com.jas.mess.processor.BeanFactoryPostProcessorLogger"/>
-    <bean id="beanDefinitionRegistryPostProcessorLogger" class="com.jas.mess.processor.BeanDefinitionRegistryPostProcessorLogger"/>
+    <!--<bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.BeanPostProcessorDemo"/>
+    <bean id="beanFactoryPostProcessorTest" class="com.jas.mess.processor.BeanFactoryPostProcessorDemo"/>
+    <bean id="beanDefinitionRegistryPostProcessorLogger" class="com.jas.mess.processor.BeanDefinitionRegistryPostProcessorDemo"/>
 
-    <bean id="smartInitializingSingletonLogger" class="com.jas.mess.bean.SmartInitializingSingletonLogger"/>
+    <bean id="smartInitializingSingletonLogger" class="com.jas.mess.bean.SmartInitializingSingletonLogger"/>-->
+
+    <!-- 事件机制 -->
+    <bean id="eventDemoPublish" class="com.jas.mess.event.EventDemoPublish"/>
+    <bean id="eventDemo1Listener" class="com.jas.mess.event.EventDemo1Listener"/>
+    <bean id="eventDemo2Listener" class="com.jas.mess.event.EventDemo2Listener"/>
+
+    <bean id="contextRefreshedEventDemo" class="com.jas.mess.event.ContextRefreshedEventDemo"/>
 </beans>
