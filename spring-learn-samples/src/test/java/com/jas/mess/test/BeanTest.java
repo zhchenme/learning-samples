@@ -6,6 +6,7 @@ import com.jas.mess.event.EventDemoPublish;
 import com.jas.mess.factory.UserFactoryBean;
 import com.jas.mess.lookup.method.NewsPublisher;
 import com.jas.mess.lookup.method.NewsPublisherAware;
+import com.jas.mess.supplier.SupplierDemo;
 import org.junit.Test;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -24,14 +25,14 @@ public class BeanTest {
     @Test
     public void aliasTest() {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
-        System.out.println("user -> " + applicationContext.getBean("user"));
+        System.out.println("user -> " + applicationContext.getBean("dept"));
         System.out.println("alias-user2 -> " + applicationContext.getBean("user2"));
     }
 
     @Test
     public void autowireTest() {
         User user = new ClassPathXmlApplicationContext(configLocation).getBean("user", User.class);
-        System.out.println("autowire test ->" + user.getDept().getDeptName());
+        //System.out.println("autowire test ->" + user.getDept().getDeptName());
     }
 
     @Test
@@ -93,5 +94,11 @@ public class BeanTest {
     public void test() {
         // i get it.
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
+    }
+
+    @Test
+    public void supplierTest() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
+        System.out.println(applicationContext.getBean("supplierDemo", SupplierDemo.class).get());
     }
 }

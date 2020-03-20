@@ -12,6 +12,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
  */
 public class BeanDefinitionRegistryPostProcessorDemo implements BeanDefinitionRegistryPostProcessor {
 
+    @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         // 获取所有 beanDefinitionNames
         String[] beanDefinitionNames = registry.getBeanDefinitionNames();
@@ -23,6 +24,7 @@ public class BeanDefinitionRegistryPostProcessorDemo implements BeanDefinitionRe
         System.out.println("------------BeanDefinitionRegistryPostProcessor start-------------");
     }
 
+    @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         System.out.println("------------BeanDefinitionRegistryPostProcessor end-------------");
     }

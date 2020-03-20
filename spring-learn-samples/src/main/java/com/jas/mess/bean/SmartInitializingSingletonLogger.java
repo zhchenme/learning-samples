@@ -7,6 +7,7 @@ import org.springframework.beans.factory.SmartInitializingSingleton;
  * @since 2020/03/07
  */
 public class SmartInitializingSingletonLogger implements SmartInitializingSingleton {
+    @Override
     public void afterSingletonsInstantiated() {
         System.out.println("singleton created");
     }

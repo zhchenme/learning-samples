@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  */
 public class BeanFactoryPostProcessorDemo implements BeanFactoryPostProcessor {
 
+    @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         System.out.println("------------BeanFactoryPostProcessorLogger-------------");
     }

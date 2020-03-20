@@ -39,6 +39,9 @@
 
     <bean id="newsPublisherAware" class="com.jas.mess.lookup.method.NewsPublisherAware"/>
 
+    <!-- Supplier -->
+    <bean id="supplierDemo" class="com.jas.mess.supplier.SupplierDemo"/>
+
     <!-- 后置处理器 -->
     <!--<bean id="loggerBeanPostProcessor" class="com.jas.mess.processor.BeanPostProcessorDemo"/>
     <bean id="beanFactoryPostProcessorTest" class="com.jas.mess.processor.BeanFactoryPostProcessorDemo"/>
