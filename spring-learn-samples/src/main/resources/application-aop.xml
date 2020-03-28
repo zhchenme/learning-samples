@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="userServiceImpl" class="com.jas.mess.aop.UserServiceImpl"/>
+    <bean id="ownerAspect" class="com.jas.mess.aop.spring.OwnerAspect"/>
+
+    <aop:config proxy-target-class="true" expose-proxy="true">
+        <aop:aspect ref="ownerAspect">
+            <aop:pointcut id="ownerPointcut" expression="execution(* com.jas.mess.aop.*.*(..))"/>
+            <aop:before method="recordLog" pointcut-ref="ownerPointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

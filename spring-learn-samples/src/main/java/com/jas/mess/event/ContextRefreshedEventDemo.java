@@ -18,7 +18,7 @@ public class ContextRefreshedEventDemo implements ApplicationListener<ContextRef
         // 加这个判断是为了防止在父容器存在的情况下将事件广播给父容器
         if (null == event.getApplicationContext().getParent()) {
             Map<String, User> beansOfType = event.getApplicationContext().getBeansOfType(User.class);
-            System.out.println(JSON.toJSON(beansOfType));
+            // System.out.println(JSON.toJSON(beansOfType));
         }
     }
 }

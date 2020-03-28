@@ -3,6 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="application-aop.xml"/>
+
     <!--
         autowire：可自动注入属性，而不需要手动设置
             byType：根据 class 类型注入属性

@@ -1,6 +1,5 @@
 package com.jas.mess.test;
 
-import com.alibaba.fastjson.JSON;
 import com.jas.mess.bean.User;
 import com.jas.mess.event.EventDemoPublish;
 import com.jas.mess.factory.UserFactoryBean;
