@@ -10,7 +10,8 @@ import com.jas.mess.aop.UserServiceImpl;
 public class MainTest {
 
     public static void main(String[] args) {
-        UserService proxy = OwnerProxy.proxy(new UserServiceImpl());
+        JdkProxyCreator jdkProxyCreator = new JdkProxyCreator(new UserServiceImpl());
+        UserService proxy = (UserService) jdkProxyCreator.getProxy();
         proxy.sayHello();
     }
 
