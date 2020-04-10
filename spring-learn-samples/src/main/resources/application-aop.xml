@@ -6,7 +6,11 @@
     <bean id="userServiceImpl" class="com.jas.mess.aop.UserServiceImpl"/>
     <bean id="ownerAspect" class="com.jas.mess.aop.spring.OwnerAspect"/>
 
-    <aop:config proxy-target-class="true" expose-proxy="true">
+    <!--
+        proxy-target-class="true"：使用 CGLIB 代理，默认为 false
+        expose-proxy="true"：A 方法调用 B 方法，A 方法会被切面拦截，A 里的 B 方法是否会被切面拦截增强，默认不会，other 还需要进行代码配置
+    -->
+    <aop:config expose-proxy="true"  proxy-target-class="true">
         <aop:aspect ref="ownerAspect">
             <aop:pointcut id="ownerPointcut" expression="execution(* com.jas.mess.aop.*.*(..))"/>
             <aop:before method="recordLog" pointcut-ref="ownerPointcut"/>
