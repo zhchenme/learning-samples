@@ -1,3 +1,7 @@
+- [nio-learn-samples](#nio-learn-samples)
+  * [Channel](#channel)
+  * [Buffer](#buffer)
+
 ### nio-learn-samples
 
 #### Channel
@@ -9,6 +13,11 @@
  - `Channel` 总是从 `Buffer` 中读写
 
 `Channel` 常用的实现类：`FileChannel`、`DatagramChannel`（UDP）、`SocketChannel`（TCP）、`ServerSocketChannel`（TCP）
+
+Transfers：
+
+ - `transferFrom()`：`transferFrom(ReadableByteChannel src, long position, long count)`
+ - `transferTo()`：`transferTo(long position, long count, WritableByteChannel target)`
 
 #### Buffer
 
@@ -109,6 +118,81 @@ mark() & reset()：通过 `mark()` 进行标记，调用 `reset()` 方法时回�
         return this;
     }
 ```
+
+Scatter & Gather samples
+
+``` java
+    // Scatter：多个 Buffer 读取一个 Channel
+    ByteBuffer header = ByteBuffer.allocate(128);
+    ByteBuffer body   = ByteBuffer.allocate(1024);
+    ByteBuffer[] bufferArray = { header, body };
+    channel.read(bufferArray);
+
+    // Gather：将多个 Buffer 中的数据写入一个 Channel
+    ByteBuffer header = ByteBuffer.allocate(128);
+    ByteBuffer body   = ByteBuffer.allocate(1024);
+    Byt);eBuffer[] bufferArray = { header, body };
+    channel.write(bufferArray
+```
+
+#### Selector
+
+使用 `Selector` 只需要一个线程就可以处理多个 `Channel`，PS：如果 CPU 是多核的，在没有多任务同时执行的情况下，甚至会浪费 CPU 资源
+
+在使用 `Selector` 时 ``Channel` 必须是非阻塞的，这意味着 `FileChannel` 不支持 `Selector`，因为它是阻塞的，Socket Channel 可以很好的支持
+
+![](http://tutorials.jenkov.com/images/java-nio/overview-selectors.png) 
+
+图片来源：[Java NIO Selector](http://tutorials.jenkov.com/java-nio/selectors.html)
+
+可以通过如下方式创建一个 `Selector` 并注册 `Channel`：
+
+``` java
+    Selector selector = Selector.open();
+
+    channel.configureBlocking(false);
+    SelectionKey key = channel.register(selector, SelectionKey.OP_READ);
+```
+
+Channel 事件类型：
+ 
+ - Connect：`SelectionKey.OP_CONNECT`
+ - Accept：`SelectionKey.OP_ACCEPT`
+ - Read：`SelectionKey.OP_READ`
+ - Write：`SelectionKey.OP_WRITE`
+ 
+事件类型可以进行组合，samples：`int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;`
+
+SelectionKey：
+
+``` java
+    // 感兴趣的事件集合
+    int interestSet = selectionKey.interestOps();'
+    
+    // 就绪的 channel 集合
+    int readySet = selectionKey.readyOps();
+    
+    // 获取对应的 Channel 与 Selector
+    Channel  channel  = selectionKey.channel();
+    Selector selector = selectionKey.selector();
+
+    // 将对象存储在 selectionKey 中
+    selectionKey.attach(theObject);
+    Object attachedObj = selectionKey.attachment();
+    SelectionKey key = channel.register(selector, SelectionKey.OP_READ, theObject);
+```
+
+select 方法：返回就绪的 `Channel` 的数量
+
+ - select()：在至少一个 `Channel` 就绪之前一直阻塞
+ - int select(long timeout)：在指定的时间内阻塞，为 0 时表示一直阻塞
+ - int selectNow()：不阻塞，直接返回
+ 
+如果某个通道在上一次调用 select 方法时就已经处于就绪状态，但并未将该通道对应的 `SelectionKey` 对象从 `selectedKeys` 集合中移除，假设另一个的通道在本次调用 select 期间处于就绪状态，此时，select 返回 1，而不是 2
+
+`selector.selectedKeys();` 方法用于返回就绪的 `Channel` 对应的 `SelectionKey` 集合，当你处理完就绪 `Channel` 后一定要将对应的 `SelectionKey` 从 `selectedKeys` 集合中删除
+
+
 
 from：[Java NIO](http://tutorials.jenkov.com/java-nio/buffers.html) <br>
  

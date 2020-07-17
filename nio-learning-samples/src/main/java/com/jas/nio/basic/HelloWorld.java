@@ -26,7 +26,7 @@ public class HelloWorld {
                 System.out.print((char) byteBuffer.get());
             }
 
-            byteBuffer.compact();
+            byteBuffer.clear();
             read = fileChannel.read(byteBuffer);
         }
         accessFile.close();
