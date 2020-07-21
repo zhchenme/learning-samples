@@ -1,12 +1,6 @@
-- [nio-learn-samples](#nio-learn-samples)
-  * [Channel](#channel)
-  * [Buffer](#buffer)
+### 一、Channel
 
-### nio-learn-samples
-
-#### Channel
-
-`Channel` 和 `Stream` 的区别：
+#### 1.1 `Channel` 和 `Stream` 的区别
 
  - `Channel` 是可读切可写的，`Stream` 只可读或可写
  - `Channel` 可异步读写
@@ -14,21 +8,21 @@
 
 `Channel` 常用的实现类：`FileChannel`、`DatagramChannel`（UDP）、`SocketChannel`（TCP）、`ServerSocketChannel`（TCP）
 
-Transfers：
+#### 1.2 Transfers
 
  - `transferFrom()`：`transferFrom(ReadableByteChannel src, long position, long count)`
  - `transferTo()`：`transferTo(long position, long count, WritableByteChannel target)`
 
-#### Buffer
+### 二、Buffer
 
-使用 `Buffer` 读写数据步骤：
+#### 2.1 使用 `Buffer` 读写数据步骤
 
  1. 将数据写入 `Buffer`
  2. 调用 `flip()` 方法，从写模式切换到读模式
  3. 从 `Buffer` 中读数据
  4. 调用 `clear()` 或 `compact` 方法，清空 `Buffer`
 
-`Buffer` 3 个重要属性：
+#### 2.2 `Buffer` 3 个重要属性
 
  - capacity：`Buffer` 分配内存大小
  - position：
@@ -40,6 +34,8 @@ Transfers：
 
 关系：position <= limit <= capacity
 
+#### 2.3 读写数据
+
 向 `Buffer` 中写数据：
 
  1. 从 `Channel` 向 `Buffer` 中写数据，例如：`int bytesRead = inChannel.read(buf);`
@@ -49,7 +45,7 @@ Transfers：
  1. 将 `Buffer` 中的数据写入 `Channel`，例如：`int bytesWritten = inChannel.write(buf);`
  2. 通过 `get()` 方法获取，例如：`byte aByte = buf.get(); `
  
-一些方法：
+#### 2.4 一些方法
 
 flip()：从写模式切换到读模式
 
@@ -135,11 +131,11 @@ Scatter & Gather samples
     channel.write(bufferArray
 ```
 
-#### Selector
+### 三、Selector
 
-使用 `Selector` 只需要一个线程就可以处理多个 `Channel`，PS：如果 CPU 是多核的，在没有多任务同时执行的情况下，甚至会浪费 CPU 资源
+使用 `Selector` 只需要一个线程就可以处理多个 `Channel`，PS：如果 CPU 是多核的，在没有多任务同时执行的情况下，甚至会浪费 CPU 内核资源
 
-在使用 `Selector` 时 ``Channel` 必须是非阻塞的，这意味着 `FileChannel` 不支持 `Selector`，因为它是阻塞的，Socket Channel 可以很好的支持
+在使用 `Selector` 时 `Channel` 必须是非阻塞的，这意味着 `FileChannel` 不支持 `Selector`，因为它是阻塞的，Socket Channel 可以很好的支持
 
 ![](http://tutorials.jenkov.com/images/java-nio/overview-selectors.png) 
 
@@ -154,7 +150,7 @@ Scatter & Gather samples
     SelectionKey key = channel.register(selector, SelectionKey.OP_READ);
 ```
 
-Channel 事件类型：
+#### 3.1 Channel 事件类型
  
  - Connect：`SelectionKey.OP_CONNECT`
  - Accept：`SelectionKey.OP_ACCEPT`
@@ -163,7 +159,7 @@ Channel 事件类型：
  
 事件类型可以进行组合，samples：`int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;`
 
-SelectionKey：
+#### 3.2 SelectionKey
 
 ``` java
     // 感兴趣的事件集合
@@ -182,6 +178,8 @@ SelectionKey：
     SelectionKey key = channel.register(selector, SelectionKey.OP_READ, theObject);
 ```
 
+#### 3.3 就绪的 Channel
+
 select 方法：返回就绪的 `Channel` 的数量
 
  - select()：在至少一个 `Channel` 就绪之前一直阻塞
@@ -190,9 +188,16 @@ select 方法：返回就绪的 `Channel` 的数量
  
 如果某个通道在上一次调用 select 方法时就已经处于就绪状态，但并未将该通道对应的 `SelectionKey` 对象从 `selectedKeys` 集合中移除，假设另一个的通道在本次调用 select 期间处于就绪状态，此时，select 返回 1，而不是 2
 
+#### 3.4 selectedKeys()
+
 `selector.selectedKeys();` 方法用于返回就绪的 `Channel` 对应的 `SelectionKey` 集合，当你处理完就绪 `Channel` 后一定要将对应的 `SelectionKey` 从 `selectedKeys` 集合中删除
 
+### 四、others
 
+NIO 与 传统 IO 如何选择
+
+ - 如果你需要管理成千上万个连接，切这些连接每次只发送少量的数据，比如：聊天服务器，这时可以选择 NIO
+ - 如果你只需要管理少量的连接，切每个连接都占用比较大的带宽、发送大量的数据，可以选择传统 IO
 
 from：[Java NIO](http://tutorials.jenkov.com/java-nio/buffers.html) <br>
  
