@@ -1,4 +1,4 @@
-package com.jas.nio.basic.socket;
+package com.jas.nio.basic.chat;
 
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
@@ -26,19 +26,15 @@ public class ClientSocket {
     public void start() throws Exception {
         SocketChannel sc = SocketChannel.open();
         sc.connect(new InetSocketAddress(host, port));
-
         Scanner scanner = new Scanner(System.in);
-
         while (!sc.finishConnect()) {
             System.out.println("connect is not ok!");
         }
-
         String str;
         String overMsg = "over";
         while (!overMsg.equals(str = scanner.nextLine())) {
             SocketUtil.sendMsg(sc, str);
         }
-
         sc.close();
         scanner.close();
     }

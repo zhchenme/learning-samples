@@ -1,4 +1,4 @@
-package com.jas.nio.basic.socket;
+package com.jas.nio.basic.chat;
 
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
@@ -24,7 +24,6 @@ public class ServerSocket {
         ServerSocketChannel ssc = ServerSocketChannel.open();
         ssc.socket().bind(new InetSocketAddress(port));
         SocketChannel sc = ssc.accept();
-
         while (true) {
             System.out.println(SocketUtil.receiverMsg(sc));
         }

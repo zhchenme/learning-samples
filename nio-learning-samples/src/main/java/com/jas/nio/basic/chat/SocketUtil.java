@@ -1,4 +1,4 @@
-package com.jas.nio.basic.socket;
+package com.jas.nio.basic.chat;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -13,10 +13,8 @@ public class SocketUtil {
 
     public static void sendMsg(SocketChannel sc, String msg) throws Exception {
         ByteBuffer bf = ByteBuffer.allocate(BUFFER_SIZE);
-
         bf.put(msg.getBytes());
         bf.flip();
-
         sc.write(bf);
         bf.clear();
     }
@@ -25,13 +23,10 @@ public class SocketUtil {
         ByteBuffer bf = ByteBuffer.allocate(BUFFER_SIZE);
         if (-1 != sc.read(bf)) {
             bf.flip();
-
             byte[] bytes = new byte[bf.limit()];
             bf.get(bytes);
             String msg = new String(bytes);
-
             bf.clear();
-
             return msg;
         }
         return "noMsg";
