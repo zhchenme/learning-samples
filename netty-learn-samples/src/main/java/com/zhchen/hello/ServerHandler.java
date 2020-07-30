@@ -17,7 +17,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf inBuffer = (ByteBuf) msg;
         String received = inBuffer.toString(CharsetUtil.UTF_8);
-        System.out.println("server received:" + received);
+        System.out.println("Server received: " + received);
         ctx.write(Unpooled.copiedBuffer("Hello " + received, CharsetUtil.UTF_8));
     }
 
@@ -30,5 +30,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) {
+        System.out.println("Client " + ctx.channel().remoteAddress() + " connected");
     }
 }

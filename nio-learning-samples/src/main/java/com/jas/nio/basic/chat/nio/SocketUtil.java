@@ -1,4 +1,4 @@
-package com.jas.nio.basic.chat;
+package com.jas.nio.basic.chat.nio;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;

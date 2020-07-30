@@ -1,4 +1,4 @@
-package com.jas.nio.basic.bio;
+package com.jas.nio.basic.chat.bio;
 
 
 import java.io.InputStream;
@@ -31,15 +31,18 @@ public class TcpServer {
         ServerSocket ss = new ServerSocket(port);
         while (true) {
             Socket socket = ss.accept();
-            try {
-                System.out.println("有连接进来了");
-                byte[] bytes = new byte[1024];
-                InputStream is = socket.getInputStream();
-                int len;
-                while (-1 != (len = is.read(bytes))) {
-                    System.out.println(new String(bytes, 0, len));
-                }
-            } catch (Exception ignored) {}
+            System.out.println("有连接进来了");
+            new Thread(() -> {
+                try {
+                    byte[] bytes = new byte[1024];
+                    InputStream is = socket.getInputStream();
+                    int len;
+                    while (-1 != (len = is.read(bytes))) {
+                        System.out.println(new String(bytes, 0, len));
+                    }
+                    socket.close();
+                } catch (Exception ignored) {}
+            }).start();
         }
     }
 }

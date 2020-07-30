@@ -1,42 +1,41 @@
-package com.zhchen.hello;
+package com.jas.nio.basic.chat.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
- * @since 2020/07/24
+ * @since 2020/07/30
  */
-public class NettyTcpServer {
+public class NettyNioServer {
 
     public static void main(String[] args) throws Exception {
-
-        /**
-         * NioEventLoopGroup：进行事件处理，比如：接受新连接和读写数据
-         * ServerBootstrap：引导和绑定服务器
-         * ServerHandler：实现业务逻辑
-         * ServerBootstrap.bind()：绑定服务器
-         */
+        final ByteBuf buf = Unpooled.copiedBuffer("Hi!\r\n", StandardCharsets.UTF_8);
         EventLoopGroup group = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(group)
                 .channel(NioServerSocketChannel.class)
-                .localAddress(new InetSocketAddress("localhost", 8080))
+                .localAddress(8080)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new ServerHandler());
+                        new ChannelInboundHandlerAdapter() {
+                            @Override
+                            public void channelActive(ChannelHandlerContext ctx) {
+                                ctx.writeAndFlush(buf.duplicate()).addListener(ChannelFutureListener.CLOSE);
+                            }
+                        };
                     }
                 });
-        ChannelFuture channelFuture = bootstrap.bind().sync();
-        channelFuture.channel().closeFuture().sync();
+        ChannelFuture future = bootstrap.bind().sync();
+        future.channel().closeFuture().sync();
         group.shutdownGracefully().sync();
     }
 

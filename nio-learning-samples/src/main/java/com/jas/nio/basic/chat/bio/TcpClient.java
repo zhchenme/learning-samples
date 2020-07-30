@@ -1,4 +1,4 @@
-package com.jas.nio.basic.bio;
+package com.jas.nio.basic.chat.bio;
 
 import java.io.OutputStream;
 import java.net.Socket;

@@ -18,15 +18,15 @@ public class NettyTcpClient {
 
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
-        bootstrap.group(group);
-        bootstrap.channel(NioSocketChannel.class);
-        bootstrap.remoteAddress("localhost", 8080);
-        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            protected void initChannel(SocketChannel ch) {
-                ch.pipeline().addLast(new ClientHandler());
-            }
-        });
+        bootstrap.group(group)
+                .channel(NioSocketChannel.class)
+                .remoteAddress("localhost", 8080)
+                .handler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) {
+                        ch.pipeline().addLast(new ClientHandler());
+                    }
+                });
         ChannelFuture channelFuture = bootstrap.connect().sync();
         channelFuture.channel().closeFuture().sync();
         group.shutdownGracefully().sync();

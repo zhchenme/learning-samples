@@ -1,4 +1,4 @@
-package com.jas.nio.basic.chat;
+package com.jas.nio.basic.chat.nio;
 
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
