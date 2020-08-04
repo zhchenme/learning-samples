@@ -32,7 +32,7 @@ public class NettyTcpServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline().addLast(new ServerHandler()).addLast(new SecondServerHandler());
                     }
                 });
         ChannelFuture channelFuture = bootstrap.bind().sync();
