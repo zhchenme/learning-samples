@@ -19,7 +19,7 @@ public class SecondServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf inBuffer = (ByteBuf) msg;
         String received = inBuffer.toString(CharsetUtil.UTF_8);
         System.out.println("Second Server received: " + received);
-        ctx.write(Unpooled.copiedBuffer("Hello " + received, CharsetUtil.UTF_8));
+        ctx.write(Unpooled.copiedBuffer("Second Hello " + received, CharsetUtil.UTF_8));
         // 丢弃已接收到的消息，SimpleChannelInboundHandler 不需要显示释放任何资源
         ReferenceCountUtil.release(msg);
     }

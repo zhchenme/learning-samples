@@ -3,6 +3,7 @@ package com.zhchen.hello;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
@@ -11,6 +12,7 @@ import io.netty.util.CharsetUtil;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/07/24
  */
+@ChannelHandler.Sharable
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
@@ -61,7 +63,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf inBuffer = (ByteBuf) msg;
         String received = inBuffer.toString(CharsetUtil.UTF_8);
         System.out.println("Server received: " + received);
-        ctx.write(Unpooled.copiedBuffer("Second Hello " + received, CharsetUtil.UTF_8));
+        ctx.write(Unpooled.copiedBuffer("Hello " + received, CharsetUtil.UTF_8));
+        /**
+         * ChannelPipeline.fireChannelRead：从当前 channelHandler 执行
+         * ChannelHandlerContext.fireChannelRead：从下一个 channelHandler 执行
+         */
         ctx.fireChannelRead(msg);
         // 丢弃已接收到的消息，SimpleChannelInboundHandler 不需要显示释放任何资源
         // ReferenceCountUtil.release(msg);

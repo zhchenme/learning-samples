@@ -13,12 +13,12 @@ import io.netty.util.CharsetUtil;
 public class ClientHandler extends SimpleChannelInboundHandler {
 
     @Override
-    public void channelActive(ChannelHandlerContext channelHandlerContext){
+    public void channelActive(ChannelHandlerContext channelHandlerContext) {
         channelHandlerContext.writeAndFlush(Unpooled.copiedBuffer("Netty Rocks!", CharsetUtil.UTF_8));
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable cause){
+    public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable cause) {
         cause.printStackTrace();
         channelHandlerContext.close();
     }

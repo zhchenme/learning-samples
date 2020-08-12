@@ -7,10 +7,9 @@ import java.nio.channels.*;
 import java.util.*;
 
 /**
- * 参考自：https://github.com/code4wt/toyhttpd
- *
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/07/21
+ * @link https://github.com/code4wt/toyhttpd
  */
 public class NIOHttpServer {
 

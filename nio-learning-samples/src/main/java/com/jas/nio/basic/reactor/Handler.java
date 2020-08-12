@@ -55,7 +55,7 @@ public class Handler implements Runnable {
         }
     }
 
-    private void read() throws Exception {
+    private synchronized void read() throws Exception {
         int read = channel.read(readBuf);
         System.out.println("read(): #bytes read into 'readBuf' buffer = " + read);
         if (-1 == read) {
@@ -66,7 +66,7 @@ public class Handler implements Runnable {
         }
     }
 
-    private void process() {
+    private synchronized void process() {
         readBuf.flip();
         byte[] bytes = new byte[readBuf.remaining()];
         readBuf.get(bytes, 0, bytes.length);
