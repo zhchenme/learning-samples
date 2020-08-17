@@ -16,6 +16,7 @@
         <module>effective-java-samples</module>
         <module>netty-learn-samples</module>
         <module>nio-learning-samples</module>
+        <module>bio-learning-samples</module>
     </modules>
 
     <dependencies>
