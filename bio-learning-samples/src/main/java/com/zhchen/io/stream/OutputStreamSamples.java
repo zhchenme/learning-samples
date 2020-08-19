@@ -6,7 +6,7 @@ import java.io.*;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/08/17
  */
-public class OutputStreamDemo {
+public class OutputStreamSamples {
 
     public static final String OVER = "over";
 

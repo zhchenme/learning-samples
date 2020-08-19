@@ -9,7 +9,7 @@ import java.io.Reader;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/08/17
  */
-public class InputStreamDemo {
+public class InputStreamSamples {
 
     public static void main(String[] args) throws Exception {
         // inputStreamDemo1();

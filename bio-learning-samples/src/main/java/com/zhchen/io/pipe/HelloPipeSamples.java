@@ -8,7 +8,7 @@ import java.io.PipedOutputStream;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/08/14
  */
-public class HelloPipe {
+public class HelloPipeSamples {
 
     public static void main(String[] args) throws IOException {
 

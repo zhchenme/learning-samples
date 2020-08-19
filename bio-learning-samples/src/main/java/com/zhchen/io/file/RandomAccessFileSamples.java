@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/08/17
  */
-public class RandomAccessFileDemo {
+public class RandomAccessFileSamples {
 
     public static void main(String[] args) throws Exception {
 

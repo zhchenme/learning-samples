@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/08/17
  */
-public class FileDemo {
+public class FileSamples {
 
     public static void main(String[] args) {
 
@@ -21,7 +21,7 @@ public class FileDemo {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             if (null != files) {
-                Arrays.stream(files).forEach(FileDemo::loopPrintFile);
+                Arrays.stream(files).forEach(FileSamples::loopPrintFile);
             }
         } else {
             System.out.println(file.getAbsolutePath());
