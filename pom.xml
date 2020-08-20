@@ -17,6 +17,7 @@
         <module>netty-learn-samples</module>
         <module>nio-learning-samples</module>
         <module>bio-learning-samples</module>
+        <module>date-api-samples</module>
     </modules>
 
     <dependencies>
