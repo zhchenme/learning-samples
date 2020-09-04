@@ -21,6 +21,7 @@
         <module>generic-learning-samples</module>
         <module>socketio-learning-samples</module>
         <module>reflection-samples</module>
+        <module>concurrency-samples</module>
     </modules>
 
     <build>
@@ -48,5 +49,12 @@
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>[24.1.1,)</version>
+        </dependency>
+
     </dependencies>
 </project>
