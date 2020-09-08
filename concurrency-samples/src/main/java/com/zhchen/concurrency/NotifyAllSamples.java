@@ -6,7 +6,7 @@ package com.zhchen.concurrency;
  */
 public class NotifyAllSamples {
 
-    private static final Object obj = new Object();
+    private static final Object LOCK = new Object();
 
     public static void main(String[] args) {
 
@@ -24,9 +24,9 @@ public class NotifyAllSamples {
             e.printStackTrace();
         }
 
-        synchronized (obj) {
+        synchronized (LOCK) {
             System.out.println(Thread.currentThread().getName() + " notifyAll()");
-            obj.notifyAll();
+            LOCK.notifyAll();
         }
     }
 
@@ -36,10 +36,10 @@ public class NotifyAllSamples {
         }
         @Override
         public void run() {
-            synchronized (obj) {
+            synchronized (LOCK) {
                 try {
                     System.out.println(Thread.currentThread().getName() + " wait");
-                    obj.wait();
+                    LOCK.wait();
                     System.out.println(Thread.currentThread().getName() + " continue");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
