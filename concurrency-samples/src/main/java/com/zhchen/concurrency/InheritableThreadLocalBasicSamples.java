@@ -4,7 +4,7 @@ package com.zhchen.concurrency;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/09/30
  */
-public class InheritableThreadLocalBasicExample {
+public class InheritableThreadLocalBasicSamples {
 
     public static void main(String[] args) {
 
