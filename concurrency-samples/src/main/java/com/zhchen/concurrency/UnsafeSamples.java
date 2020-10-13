@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @from https://www.baeldung.com/java-unsafe
+ * @from https://tech.meituan.com/2019/02/14/talk-about-java-magic-class-unsafe.html
  * @since 2020/10/10
  */
 public class UnsafeSamples {
@@ -91,7 +92,7 @@ public class UnsafeSamples {
         private final long address;
 
         public OffHeapArray(long size) throws Exception {
-            // 分配堆外内存
+            // 分配堆外内存，需要频繁进行内存间数据拷贝且生命周期较短的暂存数据，都建议存储到堆外内存
             address = getInstanceByReflection().allocateMemory(size * BYTE);
         }
 
