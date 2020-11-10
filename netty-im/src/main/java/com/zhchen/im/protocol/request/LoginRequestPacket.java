@@ -1,5 +1,7 @@
-package com.zhchen.im;
+package com.zhchen.im.protocol.request;
 
+import com.zhchen.im.protocol.Packet;
+import com.zhchen.im.protocol.command.Command;
 import lombok.Data;
 
 /**
@@ -9,7 +11,7 @@ import lombok.Data;
 @Data
 public class LoginRequestPacket extends Packet {
 
-    private Integer userId;
+    private String userId;
 
     private String username;
 

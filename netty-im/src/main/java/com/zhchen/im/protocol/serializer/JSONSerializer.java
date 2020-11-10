@@ -1,4 +1,4 @@
-package com.zhchen.im;
+package com.zhchen.im.protocol.serializer;
 
 import com.alibaba.fastjson.JSON;
 

@@ -1,4 +1,4 @@
-package com.zhchen.im;
+package com.zhchen.im.protocol;
 
 import lombok.Data;
 

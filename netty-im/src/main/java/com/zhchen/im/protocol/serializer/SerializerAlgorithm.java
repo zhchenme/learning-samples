@@ -1,4 +1,4 @@
-package com.zhchen.im;
+package com.zhchen.im.protocol.serializer;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>

@@ -1,5 +1,12 @@
-package com.zhchen.im;
+package com.zhchen.im.protocol;
 
+import com.zhchen.im.protocol.command.Command;
+import com.zhchen.im.protocol.request.LoginRequestPacket;
+import com.zhchen.im.protocol.request.MessageRequestPacket;
+import com.zhchen.im.protocol.response.LoginResponsePacket;
+import com.zhchen.im.protocol.response.MessageResponsePacket;
+import com.zhchen.im.protocol.serializer.JSONSerializer;
+import com.zhchen.im.protocol.serializer.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
@@ -13,6 +20,7 @@ import java.util.Map;
 public class PacketCodeC {
 
     private static final int MAGIC_NUMBER = 0x12345678;
+    public static final PacketCodeC INSTANCE = new PacketCodeC();
 
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
@@ -20,15 +28,18 @@ public class PacketCodeC {
     static {
         PACKET_TYPE_MAP = new HashMap<>();
         PACKET_TYPE_MAP.put(Command.LOGIN_REQUEST, LoginRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();
         SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public ByteBuf encode(Packet packet) {
+    public ByteBuf encode(ByteBuf byteBuf, Packet packet) {
         /*--- 数据编码格式：魔数-版本-序列化算法-命令-数据字节长度-真实数据 ---*/
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
         byteBuf.writeInt(MAGIC_NUMBER);
         byteBuf.writeByte(packet.getVersion());
