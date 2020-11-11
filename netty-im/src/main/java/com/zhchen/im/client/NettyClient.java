@@ -1,14 +1,13 @@
 package com.zhchen.im.client;
 
-import com.zhchen.im.client.handler.LoginResponseHandler;
-import com.zhchen.im.client.handler.MessageResponseHandler;
-import com.zhchen.im.protocol.PacketCodeC;
+import com.zhchen.im.client.console.ConsoleCommandManager;
+import com.zhchen.im.client.console.LoginConsoleCommand;
+import com.zhchen.im.client.handler.*;
+import com.zhchen.im.protocol.Spliter;
 import com.zhchen.im.protocol.codec.PacketDecoder;
 import com.zhchen.im.protocol.codec.PacketEncoder;
-import com.zhchen.im.protocol.request.MessageRequestPacket;
-import com.zhchen.im.util.LoginUtil;
+import com.zhchen.im.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -46,10 +45,15 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) {
-                        ch.pipeline().addLast(new PacketDecoder())
+                        // LengthFieldBasedFrameDecoder 包解析器，防止数据出现粘连
+                        ch.pipeline().addLast(new Spliter())
+                                .addLast(new PacketDecoder())
                                 .addLast(new PacketEncoder())
                                 .addLast(new LoginResponseHandler())
-                                .addLast(new MessageResponseHandler());
+                                .addLast(new MessageResponseHandler())
+                                .addLast(new CreateGroupResponseHandler())
+                                .addLast(new JoinGroupResponseHandler())
+                                .addLast(new QuitGroupResponseHandler());
                     }
                 });
         connect(bootstrap, MAX_RETRY);
@@ -74,19 +78,17 @@ public class NettyClient {
     }
 
     private static void startConsoleThread(Channel channel) {
+        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+        Scanner scanner = new Scanner(System.in);
         new Thread(() -> {
             while (!Thread.interrupted()) {
-                if (LoginUtil.hasLogin(channel)) {
-                    System.out.println("输入消息发送至服务端：");
-                    Scanner sc = new Scanner(System.in);
-                    String line = sc.nextLine();
-                    MessageRequestPacket packet = new MessageRequestPacket();
-                    packet.setMessage(line);
-                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc().ioBuffer(), packet);
-                    channel.writeAndFlush(byteBuf);
+                if (!SessionUtil.hasLogin(channel)) {
+                    loginConsoleCommand.exec(scanner, channel);
+                } else {
+                    consoleCommandManager.exec(scanner, channel);
                 }
             }
         }).start();
     }
-
 }

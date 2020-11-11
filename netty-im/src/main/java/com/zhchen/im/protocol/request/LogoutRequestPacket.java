@@ -2,25 +2,17 @@ package com.zhchen.im.protocol.request;
 
 import com.zhchen.im.protocol.Packet;
 import com.zhchen.im.protocol.command.Command;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
- * @since 2020/11/09
+ * @since 2020/11/11
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class MessageRequestPacket extends Packet {
-
-    private String message;
-
-    private String toUserId;
+public class LogoutRequestPacket extends Packet {
 
     @Override
     public Byte getCommand() {
-        return Command.MESSAGE_REQUEST;
+        return Command.LOGOUT_REQUEST;
     }
 }

@@ -2,25 +2,19 @@ package com.zhchen.im.protocol.request;
 
 import com.zhchen.im.protocol.Packet;
 import com.zhchen.im.protocol.command.Command;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
- * @since 2020/11/09
+ * @since 2020/11/11
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class MessageRequestPacket extends Packet {
+public class QuitGroupRequestPacket extends Packet {
 
-    private String message;
-
-    private String toUserId;
+    private String groupId;
 
     @Override
     public Byte getCommand() {
-        return Command.MESSAGE_REQUEST;
+        return Command.QUIT_GROUP_REQUEST;
     }
 }

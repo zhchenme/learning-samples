@@ -1,26 +1,27 @@
 package com.zhchen.im.protocol.response;
 
-import com.zhchen.im.protocol.command.Command;
 import com.zhchen.im.protocol.Packet;
+import com.zhchen.im.protocol.command.Command;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
- * @since 2020/11/09
+ * @since 2020/11/11
  */
 @Data
-public class LoginResponsePacket extends Packet {
-
-    private String reason;
+public class CreateGroupResponsePacket extends Packet {
 
     private Boolean success;
 
-    private String userId;
+    private String groupId;
 
-    private String userName;
+    private List<String> userNameList;
 
     @Override
     public Byte getCommand() {
-        return Command.LOGIN_RESPONSE;
+
+        return Command.CREATE_GROUP_RESPONSE;
     }
 }

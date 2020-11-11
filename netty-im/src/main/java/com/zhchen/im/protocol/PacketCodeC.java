@@ -1,14 +1,11 @@
 package com.zhchen.im.protocol;
 
 import com.zhchen.im.protocol.command.Command;
-import com.zhchen.im.protocol.request.LoginRequestPacket;
-import com.zhchen.im.protocol.request.MessageRequestPacket;
-import com.zhchen.im.protocol.response.LoginResponsePacket;
-import com.zhchen.im.protocol.response.MessageResponsePacket;
+import com.zhchen.im.protocol.request.*;
+import com.zhchen.im.protocol.response.*;
 import com.zhchen.im.protocol.serializer.JSONSerializer;
 import com.zhchen.im.protocol.serializer.Serializer;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +16,7 @@ import java.util.Map;
  */
 public class PacketCodeC {
 
-    private static final int MAGIC_NUMBER = 0x12345678;
+    public static final int MAGIC_NUMBER = 0x12345678;
     public static final PacketCodeC INSTANCE = new PacketCodeC();
 
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
@@ -32,6 +29,18 @@ public class PacketCodeC {
 
         PACKET_TYPE_MAP.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
         PACKET_TYPE_MAP.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.LOGOUT_REQUEST, LogoutRequestPacket.class);
+        // PACKET_TYPE_MAP.put(Command.LOGOUT_RESPONSE, Logo.class);
+
+        PACKET_TYPE_MAP.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

@@ -1,13 +1,12 @@
 package com.zhchen.im.server.handler;
 
-import com.zhchen.im.protocol.PacketCodeC;
+import com.zhchen.im.protocol.Session;
 import com.zhchen.im.protocol.request.MessageRequestPacket;
 import com.zhchen.im.protocol.response.MessageResponsePacket;
-import io.netty.buffer.ByteBuf;
+import com.zhchen.im.util.SessionUtil;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-
-import java.util.Date;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
@@ -17,15 +16,16 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket messageRequestPacket) {
-        MessageResponsePacket messageResponsePacket = this.receiveMessage(messageRequestPacket);
-        ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc().ioBuffer(), messageResponsePacket);
-        ctx.channel().writeAndFlush(responseByteBuf);
-    }
-
-    private MessageResponsePacket receiveMessage(MessageRequestPacket messageRequestPacket) {
-        System.out.println(new Date() + ": 收到客户端消息: " + messageRequestPacket.getMessage());
+        Session session = SessionUtil.getSession(ctx.channel());
         MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
-        messageResponsePacket.setMessage("服务端回复【" + messageRequestPacket.getMessage() + "】");
-        return messageResponsePacket;
+        messageResponsePacket.setMessage(messageRequestPacket.getMessage());
+        messageResponsePacket.setFromUserId(session.getUserId());
+        messageResponsePacket.setFromUserName(session.getUserName());
+        Channel toUserChannel = SessionUtil.getChannel(messageRequestPacket.getToUserId());
+        if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
+            toUserChannel.writeAndFlush(messageResponsePacket);
+        } else {
+            System.err.println("[" + messageRequestPacket.getToUserId() + "] 不在线，发送失败!");
+        }
     }
 }

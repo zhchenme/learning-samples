@@ -6,19 +6,20 @@ import lombok.Data;
 
 /**
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
- * @since 2020/11/09
+ * @since 2020/11/11
  */
 @Data
-public class MessageResponsePacket extends Packet {
+public class QuitGroupResponsePacket extends Packet {
 
-    private String message;
+    private String groupId;
 
-    private String fromUserId;
+    private boolean success;
 
-    private String fromUserName;
+    private String reason;
 
     @Override
     public Byte getCommand() {
-        return Command.MESSAGE_RESPONSE;
+
+        return Command.QUIT_GROUP_RESPONSE;
     }
 }
