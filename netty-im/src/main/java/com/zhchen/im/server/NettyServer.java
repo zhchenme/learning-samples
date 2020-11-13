@@ -1,9 +1,12 @@
 package com.zhchen.im.server;
 
+import com.zhchen.im.handler.IMIdleStateHandler;
 import com.zhchen.im.protocol.Spliter;
-import com.zhchen.im.protocol.codec.PacketDecoder;
-import com.zhchen.im.protocol.codec.PacketEncoder;
-import com.zhchen.im.server.handler.*;
+import com.zhchen.im.codec.PacketCodecHandler;
+import com.zhchen.im.server.handler.AuthHandler;
+import com.zhchen.im.server.handler.HeartBeatRequestHandler;
+import com.zhchen.im.server.handler.IMHandler;
+import com.zhchen.im.server.handler.LoginRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -37,16 +40,14 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) {
-                        ch.pipeline().addLast(new Spliter())
-                                .addLast(new PacketDecoder())
-                                .addLast(new PacketEncoder())
+                        ch.pipeline().addLast(new IMIdleStateHandler())
+                                .addLast(new Spliter())
+                                .addLast(PacketCodecHandler.INSTANCE)
                                 // .addLast(new LifeCyCleTestHandler())
                                 .addLast(new LoginRequestHandler())
+                                .addLast(new HeartBeatRequestHandler())
                                 .addLast(new AuthHandler())
-                                .addLast(new MessageRequestHandler())
-                                .addLast(new CreateGroupRequestHandler())
-                                .addLast(new JoinGroupRequestHandler())
-                                .addLast(new QuitGroupRequestHandler());
+                                .addLast(IMHandler.INSTANCE);
                     }
                 })
                 // 为每个连接设置自定义属性，通过 chanel.attr() 方法获取值

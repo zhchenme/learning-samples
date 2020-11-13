@@ -3,9 +3,10 @@ package com.zhchen.im.client;
 import com.zhchen.im.client.console.ConsoleCommandManager;
 import com.zhchen.im.client.console.LoginConsoleCommand;
 import com.zhchen.im.client.handler.*;
+import com.zhchen.im.codec.PacketDecoder;
+import com.zhchen.im.codec.PacketEncoder;
+import com.zhchen.im.handler.IMIdleStateHandler;
 import com.zhchen.im.protocol.Spliter;
-import com.zhchen.im.protocol.codec.PacketDecoder;
-import com.zhchen.im.protocol.codec.PacketEncoder;
 import com.zhchen.im.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -46,14 +47,18 @@ public class NettyClient {
                     @Override
                     protected void initChannel(SocketChannel ch) {
                         // LengthFieldBasedFrameDecoder 包解析器，防止数据出现粘连
-                        ch.pipeline().addLast(new Spliter())
+                        ch.pipeline().addLast(new IMIdleStateHandler())
+                                .addLast(new Spliter())
                                 .addLast(new PacketDecoder())
                                 .addLast(new PacketEncoder())
                                 .addLast(new LoginResponseHandler())
                                 .addLast(new MessageResponseHandler())
                                 .addLast(new CreateGroupResponseHandler())
                                 .addLast(new JoinGroupResponseHandler())
-                                .addLast(new QuitGroupResponseHandler());
+                                .addLast(new QuitGroupResponseHandler())
+                                .addLast(new ListGroupMembersResponseHandler())
+                                .addLast(new GroupMessageResponseHandler())
+                                .addLast(new HeartBeatTimerHandler());
                     }
                 });
         connect(bootstrap, MAX_RETRY);

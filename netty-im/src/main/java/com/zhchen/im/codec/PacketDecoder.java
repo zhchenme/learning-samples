@@ -1,6 +1,6 @@
-package com.zhchen.im.protocol.codec;
+package com.zhchen.im.codec;
 
-import com.zhchen.im.protocol.PacketCodeC;
+import com.zhchen.im.protocol.PacketCodec;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -15,6 +15,6 @@ public class PacketDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-        out.add(PacketCodeC.INSTANCE.decode(in));
+        out.add(PacketCodec.INSTANCE.decode(in));
     }
 }

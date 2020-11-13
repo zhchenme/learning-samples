@@ -5,6 +5,7 @@ import com.zhchen.im.protocol.response.CreateGroupResponsePacket;
 import com.zhchen.im.util.IDUtil;
 import com.zhchen.im.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -17,7 +18,10 @@ import java.util.List;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/11/11
  */
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+
+    public static final SimpleChannelInboundHandler<CreateGroupRequestPacket> INSTANCE = new CreateGroupRequestHandler();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket createGroupRequestPacket) {
@@ -33,10 +37,12 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
         }
         CreateGroupResponsePacket createGroupResponsePacket = new CreateGroupResponsePacket();
         createGroupResponsePacket.setSuccess(true);
-        createGroupResponsePacket.setGroupId(IDUtil.randomId());
+        String groupId = IDUtil.randomId();
+        createGroupResponsePacket.setGroupId(groupId);
         createGroupResponsePacket.setUserNameList(userNameList);
         channelGroup.writeAndFlush(createGroupResponsePacket);
         System.out.print("群创建成功，id 为[" + createGroupResponsePacket.getGroupId() + "], ");
         System.out.println("群里面有：" + createGroupResponsePacket.getUserNameList());
+        SessionUtil.bindChannelGroup(groupId, channelGroup);
     }
 }

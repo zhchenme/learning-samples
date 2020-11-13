@@ -14,10 +14,10 @@ import java.util.Map;
  * @author <a href="mailto:chen.zhang@yunhuyj.com">lanxiang</a>
  * @since 2020/11/06
  */
-public class PacketCodeC {
+public class PacketCodec {
 
     public static final int MAGIC_NUMBER = 0x12345678;
-    public static final PacketCodeC INSTANCE = new PacketCodeC();
+    public static final PacketCodec INSTANCE = new PacketCodec();
 
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
@@ -41,6 +41,15 @@ public class PacketCodeC {
 
         PACKET_TYPE_MAP.put(Command.QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
         PACKET_TYPE_MAP.put(Command.QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.GROUP_MESSAGE_REQUEST, GroupMessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.GROUP_MESSAGE_RESPONSE, GroupMessageResponsePacket.class);
+
+        PACKET_TYPE_MAP.put(Command.HEARTBEAT_REQUEST, HeartBeatRequestPacket.class);
+        PACKET_TYPE_MAP.put(Command.HEARTBEAT_RESPONSE, HeartBeatResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         Serializer serializer = new JSONSerializer();

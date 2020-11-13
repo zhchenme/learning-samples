@@ -1,4 +1,4 @@
-package com.zhchen.im;
+package com.zhchen.im.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
