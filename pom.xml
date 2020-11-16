@@ -23,6 +23,7 @@
         <module>reflection-samples</module>
         <module>concurrency-samples</module>
         <module>netty-im</module>
+        <module>zk-samples</module>
     </modules>
 
     <build>
