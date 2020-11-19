@@ -24,6 +24,7 @@
         <module>concurrency-samples</module>
         <module>netty-im</module>
         <module>zk-samples</module>
+        <module>dubbo-samples</module>
     </modules>
 
     <build>

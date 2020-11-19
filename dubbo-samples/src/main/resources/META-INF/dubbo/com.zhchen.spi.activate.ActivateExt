@@ -1,0 +1,5 @@
+group=com.zhchen.spi.activate.GroupActivateExtImpl
+value=com.zhchen.spi.activate.ValueActivateExtImpl
+order1=com.zhchen.spi.activate.OrderActivateExtImpl1
+order2=com.zhchen.spi.activate.OrderActivateExtImpl2
+com.zhchen.spi.activate.ActivateExt1Impl

@@ -1,0 +1,3 @@
+dubbo=com.zhchen.spi.adaptive.DubboAdaptiveExt
+cloud=com.zhchen.spi.adaptive.SpringCloudAdaptiveExt
+thrift=com.zhchen.spi.adaptive.ThriftAdaptiveExt
