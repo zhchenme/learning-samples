@@ -10,4 +10,9 @@ public class SPIDemoServiceImpl implements SPIDemoService {
     public void sayHello() {
         System.out.println("Hello world");
     }
+
+    @Override
+    public void setInjectUser(InjectUser injectUser) {
+        System.out.println("injectUser = " + injectUser);
+    }
 }

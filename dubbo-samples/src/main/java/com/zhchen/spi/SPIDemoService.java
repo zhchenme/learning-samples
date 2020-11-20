@@ -10,4 +10,6 @@ import org.apache.dubbo.common.extension.SPI;
 public interface SPIDemoService {
 
     void sayHello();
+
+    void setInjectUser(InjectUser injectUser);
 }

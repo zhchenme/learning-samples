@@ -6,7 +6,6 @@ import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.extension.ExtensionLoader;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,6 +17,19 @@ public class SPITest {
     @Test
     public void spiTest() {
         ExtensionLoader<SPIDemoService> loader = ExtensionLoader.getExtensionLoader(SPIDemoService.class);
+        SPIDemoService spiDemoService = loader.getExtension("spi");
+        spiDemoService.sayHello();
+    }
+
+    /**
+     * dubbo 依赖注入的对象必须是扩展对象，而且必须是 @Adaptive 扩展
+     * 依赖的对象在 dubbo 注入之前需要被加载过
+     */
+    @Test
+    public void spiInjectExtensionTest() {
+        ExtensionLoader<SPIDemoService> loader = ExtensionLoader.getExtensionLoader(SPIDemoService.class);
+        ExtensionLoader<InjectUser> injectUserExtensionLoader = ExtensionLoader.getExtensionLoader(InjectUser.class);
+        InjectUser injectUser = injectUserExtensionLoader.getAdaptiveExtension();
         SPIDemoService spiDemoService = loader.getExtension("spi");
         spiDemoService.sayHello();
     }
